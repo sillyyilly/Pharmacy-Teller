@@ -13,10 +13,9 @@ This application is useful for:
 
 ## User Stories
 
-- As a user, I want to be able to add a vitamin to my medication list
-- As a user, I want to be able to switch the pharmacy listed in my profile
-- As a user, I want to be able to upload a picture of my prescription 
-- As a user, I want to be able to order medication/vitamins
-- As a user, I want to be able to view my orders
+- As a user, I want to be able to add an item to an order
+- As a user, I want to be able to see my order total price
+- As a user, I want to be able to select which item I want to add to my order from options
+
 
 
