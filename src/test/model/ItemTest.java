@@ -15,7 +15,7 @@ public class ItemTest {
     }
 
     @Test
-    void testConstructor() {
+    void testConstructorForItem() {
         assertEquals("Advil", testItem.getItemName());
         assertEquals(1000, testItem.getItemPrice());
         assertTrue(testItem.getItemId() > 0);

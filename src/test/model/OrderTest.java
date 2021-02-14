@@ -21,7 +21,7 @@ public class OrderTest {
 
     @Test
         // if constructor assigns array list, size must be 0
-    void testConstructor() {
+    void testConstructorForOrder() {
         assertEquals(0, testOrder.getOrderSize());
     }
 
@@ -30,7 +30,6 @@ public class OrderTest {
         testOrder.addToOrder(item1);
         testOrder.addToOrder(item2);
 
-        assertEquals(2500, testOrder.orderPrice());
         assertEquals(2500, testOrder.orderPrice());
     }
 

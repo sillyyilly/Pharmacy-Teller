@@ -63,7 +63,7 @@ public class Pharmacy {
 
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
-        System.out.println("\nSelect from:");
+        System.out.println("\nWelcome to the pharmacy! Please select from:");
         System.out.println("\ta -> add item to order");
         System.out.println("\tc -> checkout");
         System.out.println("\tq -> quit");
@@ -113,10 +113,10 @@ public class Pharmacy {
     // EFFECTS: displays menu of options to user
     private void displayAddItemMenu() {
         System.out.println("Select item to add to order");
-        System.out.println("\t1 -> Advil");
-        System.out.println("\t2 -> Tylenol");
-        System.out.println("\t3 -> Midol");
-        System.out.println("\t4 -> Gravol");
+        System.out.println("\t1 -> Advil (Price: $10)");
+        System.out.println("\t2 -> Tylenol (Price: $15)");
+        System.out.println("\t3 -> Midol (Price: $7)");
+        System.out.println("\t4 -> Gravol (Price: $12)");
     }
 
     // MODIFIES: this
