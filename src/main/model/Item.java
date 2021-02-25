@@ -1,10 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.UUID;
 
-public class Item {
+public class Item implements Writable {
 
-    // id, name, price, type
+    // represents and item with an id, name, and price
 
     private static int nextItemId = 1;  // tracks id of next account created
     private final int itemId;        // item id
@@ -35,6 +38,14 @@ public class Item {
 
     public int getItemPrice() {
         return itemPrice;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("itemName", itemName);
+        json.put("itemPrice", itemPrice);
+        return json;
     }
 
 
