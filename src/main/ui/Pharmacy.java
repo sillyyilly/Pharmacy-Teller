@@ -2,7 +2,12 @@ package ui;
 
 import model.Item;
 import model.Order;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Pharmacy {
@@ -13,9 +18,16 @@ public class Pharmacy {
     private final Item gravol = new Item("Gravol",1200);
     private Scanner input;
     private Order newOrder;
+    private static final String JSON_STORE = "./data/order.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: runs the pharmacy application
     public Pharmacy() {
+        input = new Scanner(System.in);
+        newOrder = new Order("Current Order");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runPharmacy();
     }
 
@@ -24,8 +36,7 @@ public class Pharmacy {
     private void runPharmacy() {
         boolean keepGoing = true;
         String command = null;
-
-        order(); //initializes order
+        input = new Scanner(System.in);
 
         while (keepGoing) {
             displayMenu(); //display menu of options to the user
@@ -49,22 +60,25 @@ public class Pharmacy {
             doAddItem();
         } else if (command.equals("c")) {
             doCheckout();
+        } else if (command.equals("p")) {
+            printOrder();
+        } else if (command.equals("s")) {
+            saveOrder();
+        } else if (command.equals("l")) {
+            loadOrder();
         } else {
             System.out.println("Selection not valid...");
         }
     }
 
-    //    // EFFECTS: creates empty order
-    private void order() {
-        newOrder = new Order();
-        input = new Scanner(System.in);
-
-    }
 
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
         System.out.println("\nWelcome to the pharmacy! Please select from:");
         System.out.println("\ta -> add item to order");
+        System.out.println("\tp -> print items in order");
+        System.out.println("\ts -> save work room to file");
+        System.out.println("\tl -> load work room from file");
         System.out.println("\tc -> checkout");
         System.out.println("\tq -> quit");
     }
@@ -140,7 +154,7 @@ public class Pharmacy {
     private void doCheckout() {
 
         printPrice(newOrder);
-        newOrder = new Order();
+        newOrder = new Order("Current Order");
 
     }
 
@@ -148,5 +162,37 @@ public class Pharmacy {
     private void printPrice(Order newOrder) {
         System.out.printf("Price: $%.2f\n", (newOrder.orderPrice() / 100.0));
         // price stored as int in cents, divide by 100.0 to convert to float
+    }
+
+    // EFFECTS: prints all the items in order to the console
+    private void printOrder() {
+        List<Item> itemsOrdered = newOrder.getOrderItems();
+
+        for (Item t : itemsOrdered) {
+            String priceInDollars = String.format("$%.2f", t.getItemPrice() / 100.0);
+            System.out.println(t.getItemName() + " " + priceInDollars);
+        }
+    }
+
+    // EFFECTS: saves the order to file
+    private void saveOrder() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(newOrder);
+            jsonWriter.close();
+            System.out.println("Saved " + newOrder.getOrderName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    //EFFECTS:
+    private void loadOrder() {
+        try {
+            newOrder = jsonReader.read();
+            System.out.println("Loaded " + newOrder.getOrderName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 }

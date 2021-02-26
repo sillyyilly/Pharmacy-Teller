@@ -1,0 +1,20 @@
+{
+    "itemsOrdered": [
+        {
+            "itemId": 1,
+            "itemName": "Advil",
+            "itemPrice": 1000
+        },
+        {
+            "itemId": 3,
+            "itemName": "Midol",
+            "itemPrice": 700
+        },
+        {
+            "itemId": 2,
+            "itemName": "Tylenol",
+            "itemPrice": 1500
+        }
+    ],
+    "orderName": "Current Order"
+}

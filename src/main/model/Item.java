@@ -12,7 +12,7 @@ public class Item implements Writable {
     private static int nextItemId = 1;  // tracks id of next account created
     private final int itemId;        // item id
     private final String itemName;      //  item name
-    private final int itemPrice;        // price in cents
+    private int itemPrice;        // price in cents
 
 
     //REQUIRES: itemName has non-zero length
@@ -43,6 +43,7 @@ public class Item implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
+        json.put("itemId", itemId);
         json.put("itemName", itemName);
         json.put("itemPrice", itemPrice);
         return json;

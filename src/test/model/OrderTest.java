@@ -16,7 +16,7 @@ public class OrderTest {
 
     @BeforeEach
     void runBefore() {
-        testOrder = new Order();
+        testOrder = new Order("test order");
     }
 
     @Test

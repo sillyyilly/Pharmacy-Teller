@@ -5,17 +5,25 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Order implements Writable {
 
     // represents a list of items to be ordered
 
+    private String orderName;
     private ArrayList<model.Item> itemsOrdered;
 
 
     // EFFECTS: creates empty arraylist
-    public Order() {
+    public Order(String orderName) {
+        this.orderName = orderName;
         itemsOrdered = new ArrayList<>();
+    }
+
+    public String getOrderName() {
+        return orderName;
     }
 
     //MODIFIES: this
@@ -41,15 +49,21 @@ public class Order implements Writable {
         return itemsOrdered.size();
     }
 
+    // EFFECTS: returns an unmodifiable list of thingies in this workroom
+    public List<Item> getOrderItems() {
+        return Collections.unmodifiableList(itemsOrdered);
+    }
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("itemsOrdered", itemsOrdered);
+        json.put("orderName", orderName);
+        json.put("itemsOrdered", itemsOrderedToJson());
         return json;
     }
 
     // EFFECTS: returns the order as a JSON array
-    private JSONArray itemsToJson() {
+    private JSONArray itemsOrderedToJson() {
         JSONArray jsonArray = new JSONArray();
 
         for (Item i : itemsOrdered) {
