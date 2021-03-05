@@ -1,0 +1,15 @@
+{
+  "itemsOrdered": [
+    {
+      "itemId": 10,
+      "itemName": "Advil",
+      "itemPrice": 1000
+    },
+    {
+      "itemId": 11,
+      "itemName": "Tylenol",
+      "itemPrice": 1500
+    }
+  ],
+  "orderName": "test normal order"
+}

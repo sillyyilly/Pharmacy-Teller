@@ -26,7 +26,7 @@ public class JsonReader {
     // EFFECTS: reads order from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Order read() throws IOException {
-        String jsonData = readFile(source);
+        String jsonData = readFile(this.source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseOrder(jsonObject);
     }

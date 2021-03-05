@@ -17,5 +17,8 @@ This application is useful for:
 - As a user, I want to be able to see my order total price
 - As a user, I want to be able to select which item I want to add to my order from options
 - As a user, I want to be able to choose whether I want to add more items to my order  or not
+- As a user, I want to be able to see the items in my order
+- As a user, I want to be able to save my order
+- As a user, I want to be able to load my order
 
 
