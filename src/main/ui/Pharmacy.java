@@ -109,6 +109,8 @@ public class Pharmacy {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user command
     private void processContinueCommand(String continueCommand) {
         if (continueCommand.equals("y")) {
             doAddItem();
@@ -119,6 +121,7 @@ public class Pharmacy {
         }
     }
 
+    // EFFECTS: displays menu of options to user
     private void displayContinueMenu() {
         System.out.println("\ty -> yes");
         System.out.println("\tn -> no");
@@ -186,7 +189,7 @@ public class Pharmacy {
         }
     }
 
-    //EFFECTS:
+    //EFFECTS: loads order
     private void loadOrder() {
         try {
             newOrder = jsonReader.read();
