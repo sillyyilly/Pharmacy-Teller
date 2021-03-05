@@ -1,21 +1,17 @@
 package persistence;
 
 
-import com.sun.tools.corba.se.idl.constExpr.Or;
 import model.Order;
-import org.json.JSONArray;
+
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
 
-import static com.sun.tools.hat.internal.parser.Reader.readFile;
+import java.io.PrintWriter;
+
+
+
 
 // Represents a reader that reads the order from JSON data stored in file
 public class JsonWriter {
