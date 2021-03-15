@@ -3,7 +3,6 @@ package model;
 import org.junit.jupiter.api.Test;
 
 import persistence.JsonReader;
-import persistence.JsonWriter;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,7 +15,7 @@ public class JsonReaderTest {
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/nonExistentFile.json");
         try {
-            Order order = reader.read();
+            Inventory order = reader.read();
             fail("IOException expected");
         } catch (IOException e) {
             // pass
@@ -27,9 +26,9 @@ public class JsonReaderTest {
     void testReaderEmptyOrder() {
         JsonReader testReader = new JsonReader("./data/testReaderEmptyOrder.json");
         try {
-           Order order = testReader.read();
-            assertEquals("test empty order", order.getOrderName());
-            assertEquals(0, order.getOrderSize());
+           Inventory order = testReader.read();
+            assertEquals("test empty order", order.getInventoryName());
+            assertEquals(0, order.getInventorySize());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
@@ -39,9 +38,9 @@ public class JsonReaderTest {
     void testReaderNormalOrder() {
         JsonReader reader = new JsonReader("./data/testReaderNormalOrder.json");
         try {
-            Order order = reader.read();
-            assertEquals("test normal order", order.getOrderName());
-            List<Item> listOfItems = order.getOrderItems();
+            Inventory order = reader.read();
+            assertEquals("test normal order", order.getInventoryName());
+            List<Item> listOfItems = order.getInventoryItems();
             assertEquals(2, listOfItems.size());
 
         } catch (IOException e) {

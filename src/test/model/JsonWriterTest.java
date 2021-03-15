@@ -14,7 +14,7 @@ public class JsonWriterTest {
     @Test
     void testWriterInvalidFile() {
         try {
-            Order order = new Order("test order");
+            Inventory order = new Inventory("test order");
             JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");
             writer.open();
             fail("IOException was expected");
@@ -26,7 +26,7 @@ public class JsonWriterTest {
     @Test
     void testWriterEmptyOrder() {
         try {
-            Order order = new Order("test order");
+            Inventory order = new Inventory("test order");
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyOrder.json");
             writer.open();
             writer.write(order);
@@ -34,7 +34,7 @@ public class JsonWriterTest {
 
             JsonReader reader = new JsonReader("./data/testWriterEmptyOrder.json");
             order = reader.read();
-            assertEquals("test order", order.getOrderName());
+            assertEquals("test order", order.getInventoryName());
 
 
         } catch (IOException e) {
@@ -46,9 +46,9 @@ public class JsonWriterTest {
     @Test
     void testWriterNormalOrder() {
         try {
-            Order order = new Order("test order");
-            order.addToOrder(new Item("Advil", 1000));
-            order.addToOrder(new Item("Tylenol", 1500));
+            Inventory order = new Inventory("test order");
+            order.addToInventory(new Item("Advil", 1000));
+            order.addToInventory(new Item("Tylenol", 1500));
             JsonWriter writer = new JsonWriter("./data/testWriterNormalOrder.json");
             writer.open();
             writer.write(order);
@@ -56,8 +56,8 @@ public class JsonWriterTest {
 
             JsonReader reader = new JsonReader("./data/testWriterNormalOrder.json");
             order = reader.read();
-            assertEquals("test order", order.getOrderName());
-            List<Item> listOfItems = order.getOrderItems();
+            assertEquals("test order", order.getInventoryName());
+            List<Item> listOfItems = order.getInventoryItems();
             assertEquals(2, listOfItems.size());
 
             assertEquals(listOfItems.get(0).getItemName(), "Advil");

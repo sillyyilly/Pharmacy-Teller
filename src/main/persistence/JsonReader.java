@@ -2,7 +2,7 @@ package persistence;
 
 
 import model.Item;
-import model.Order;
+import model.Inventory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,10 +25,10 @@ public class JsonReader {
 
     // EFFECTS: reads order from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public Order read() throws IOException {
+    public Inventory read() throws IOException {
         String jsonData = readFile(this.source);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseOrder(jsonObject);
+        return parseInventory(jsonObject);
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -44,18 +44,18 @@ public class JsonReader {
 
 
     // EFFECTS: parses order from JSON item and returns it
-    private Order parseOrder(JSONObject jsonObject) {
-        String name = jsonObject.getString("orderName");
-        Order ord = new Order(name);
-        addItemsOrdered(ord, jsonObject);
-        return ord;
+    private Inventory parseInventory(JSONObject jsonObject) {
+        String name = jsonObject.getString("inventoryName");
+        Inventory inventory = new Inventory(name);
+        addItemsInInventory(inventory, jsonObject);
+        return inventory;
     }
 
 
     // MODIFIES: ord
     // EFFECTS: parses items from JSON object and adds them to order
-    private void addItemsOrdered(Order ord, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("itemsOrdered");
+    private void addItemsInInventory(Inventory ord, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("itemsInInventory");
         for (Object json : jsonArray) {
             JSONObject nextItem = (JSONObject) json;
             addItem(ord, nextItem);
@@ -64,12 +64,12 @@ public class JsonReader {
 
     // MODIFIES: ord
     // EFFECTS: parses item from JSON object and adds it to order
-    private void addItem(Order ord, JSONObject jsonObject) {
+    private void addItem(Inventory ord, JSONObject jsonObject) {
         String name = jsonObject.getString("itemName");
         int price = jsonObject.getInt("itemPrice");
 
         Item item = new Item(name, price);
-        ord.addToOrder(item);
+        ord.addToInventory(item);
     }
 
 }

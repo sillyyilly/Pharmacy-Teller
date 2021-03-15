@@ -1,7 +1,7 @@
 package persistence;
 
 
-import model.Order;
+import model.Inventory;
 
 import org.json.JSONObject;
 
@@ -36,8 +36,8 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of order to file
-    public void write(Order ord) {
-        JSONObject json = ord.toJson();
+    public void write(Inventory inventory) {
+        JSONObject json = inventory.toJson();
         saveToFile(json.toString(TAB));
     }
 
