@@ -35,6 +35,7 @@ public class AddItem extends JFrame {
             setVisible(false);
         });
         add(pressed);
+        // make formatted text with get/set
 
 
 
