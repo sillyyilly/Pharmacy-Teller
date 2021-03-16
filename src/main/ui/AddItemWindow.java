@@ -4,6 +4,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
@@ -15,8 +16,11 @@ import java.text.*;
  * It implements a mortgage calculator that uses four
  * JFormattedTextFields.
  */
-public class AddItem extends JPanel
+public class AddItemWindow extends JPanel
         implements PropertyChangeListener {
+
+    private JFrame frame = new JFrame("Add Item");
+
     private JButton addButton;
     //Values for the fields
     private String name = new String();
@@ -37,9 +41,15 @@ public class AddItem extends JPanel
 
     //Formats to format and parse numbers
     private NumberFormat priceFormat;
+    private String itemName;
+    private int itemPrice;
 
-    public AddItem() {
-        super(new BorderLayout());
+
+    //TODO: access inventory in pharmacy class, add item w/ item name/price value to inventory each time
+    // Add button is clicked
+
+    public AddItemWindow() {
+
         setUpFormats();
 
         //Create the labels.
@@ -63,10 +73,6 @@ public class AddItem extends JPanel
 
     public void makeTextBox() {
 
-        //Tell accessibility tools about label/textfield pairs.
-        itemNameLabel.setLabelFor(itemNameField);
-        itemPriceLabel.setLabelFor(itemPriceField);
-
         //Lay out the labels in a panel.
         JPanel labelPane = new JPanel(new GridLayout(0,1));
         labelPane.add(itemNameLabel);
@@ -81,8 +87,8 @@ public class AddItem extends JPanel
         JPanel buttonPanel = new JPanel(new GridLayout(0, 1));
         addButton = new JButton();
         addButton.setText("Add Item");
-        addButton.setActionCommand("make item");
         buttonPanel.add(addButton);
+        addButton.addActionListener(e -> addAction(e));
 
 
         //Put the panels in this panel, labels on left,
@@ -96,20 +102,43 @@ public class AddItem extends JPanel
 
     }
 
+    public void addAction(ActionEvent e) {
+        itemName = ((String) itemNameField.getValue());
+        itemPrice = ((Number) itemPriceField.getValue()).intValue();
+        frame.setVisible(false);
+        frame.dispose();
+        itemNameField.setValue(null);
+        itemPriceField.setValue(0);
+    }
 
     /** Called when a field's "value" property changes. */
     public void propertyChange(PropertyChangeEvent e) {
         Object source = e.getSource();
         if (source == itemNameField) {
-            name = ((String) itemNameField.getValue());
+            itemName = ((String) itemNameField.getValue());
         } else if (source == itemPriceField) {
-            numPrice = ((Number) itemPriceField.getValue()).intValue();
-        } else if (source == addButton) {
-            name = ((String) itemNameField.getValue());
-            numPrice = ((Number) itemPriceField.getValue()).intValue();
-
+            itemPrice = ((Number) itemPriceField.getValue()).intValue();
         }
 
+    }
+
+//    public void actionPerformed(ActionEvent e) {
+//        if ("add item".equals(e.getActionCommand())) {
+//            itemName = ((String) itemNameField.getValue());
+//            itemPrice = ((Number) itemPriceField.getValue()).intValue();
+//            frame.setVisible(false);
+//            frame.dispose();
+//            name = null;
+//            numPrice = 0;
+//        }
+//    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public int getItemPrice() {
+        return itemPrice;
     }
 
     /**
@@ -117,30 +146,35 @@ public class AddItem extends JPanel
      * this method should be invoked from the
      * event dispatch thread.
      */
-    private static void createAndShowGUI() {
+    private void createAndShowGUI() {
         //Create and set up the window.
-        JFrame frame = new JFrame("Add Item");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         //Add contents to the window.
-        frame.add(new AddItem());
+        frame.add(new AddItemWindow());
 
         //Display the window.
         frame.pack();
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                //Turn off metal's use of bold fonts
-                UIManager.put("swing.boldMetal", Boolean.FALSE);
-                createAndShowGUI();
-            }
-        });
+    public void run() {
+        //Turn off metal's use of bold fonts
+        UIManager.put("swing.boldMetal", Boolean.FALSE);
+        createAndShowGUI();
     }
+//
+//    public static void main(String[] args) {
+//        //Schedule a job for the event dispatch thread:
+//        //creating and showing this application's GUI.
+//        SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                //Turn off metal's use of bold fonts
+//                UIManager.put("swing.boldMetal", Boolean.FALSE);
+//                createAndShowGUI();
+//            }
+//        });
+//    }
 
     //Create and set up number formats. These objects also
     //parse numbers input by user.
@@ -148,3 +182,17 @@ public class AddItem extends JPanel
         priceFormat = NumberFormat.getNumberInstance();
     }
 }
+//    public AddItem(ActionListener itemAdded) {
+//        setSize(800, 450);
+//        setVisible(true);
+//        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+//
+//        JPanel buttonPanel = new JPanel();
+//        buttonPanel.setSize(100, 30);
+//
+//        JButton pressed = new JButton();
+//        pressed.addActionListener((event) -> {
+//            itemAdded.actionPerformed(event);
+//            setVisible(false);
+//        });
+//        add(pressed);

@@ -2,15 +2,21 @@ package ui;
 
 import model.Checkout;
 import model.Inventory;
+import model.Item;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Pharmacy extends JFrame {
+
 
     private Scanner input;
     private Inventory newInventory;
@@ -18,43 +24,145 @@ public class Pharmacy extends JFrame {
     private static final String JSON_STORE = "./data/inventory.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
-    int pressed = 0;
     JButton addItemToInventoryButton;
     JButton printInventoryButton;
+    JButton deleteItemsInInventoryButton;
+    JButton checkoutButton;
+    JButton saveInventoryButton;
 
     public Pharmacy() {
         super("Pharmacy");
+        input = new Scanner(System.in);
+        newInventory = new Inventory("inventoryName");
+        newCheckout = new Checkout();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        input = new Scanner(System.in);
+        loadInventory();
 
         setVisible(true);
         setSize(800, 450);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setSize(100, 30);
+        makeButtons();
+        displayButtons();
 
+    }
+
+    public void makeButtons() {
         addItemToInventoryButton = new JButton();
         addItemToInventoryButton.setText("Add Item to Inventory");
         addItemToInventoryButton.addActionListener(event -> addItem(event));
+
         printInventoryButton = new JButton();
         printInventoryButton.setText("Print Items in Inventory");
+        printInventoryButton.addActionListener(e -> printItems(e));
 
+        saveInventoryButton = new JButton();
+        saveInventoryButton.setText("Save Items in Inventory");
+        saveInventoryButton.addActionListener(e -> saveInventory(e));
 
-        buttonPanel.add(addItemToInventoryButton);
-        buttonPanel.add(printInventoryButton);
-        add(buttonPanel);
+        deleteItemsInInventoryButton = new JButton();
+        deleteItemsInInventoryButton.setText("Delete Items in Inventory");
+        deleteItemsInInventoryButton.addActionListener(e -> deleteInventory(e));
+
+        checkoutButton = new JButton();
+        checkoutButton.setText("Checkout");
+
     }
 
-    private void addItem(ActionEvent event) {
+    public void displayButtons() {
 
-        AddItem newItem = new AddItem();
+        JPanel pane = new JPanel(new GridBagLayout());
+
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.insets = new Insets(10, 10, 10, 10);
+
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        pane.add(addItemToInventoryButton, constraints);
+
+        constraints.gridx = 1;
+        pane.add(printInventoryButton, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        pane.add(saveInventoryButton, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        pane.add(deleteItemsInInventoryButton, constraints);
+
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        pane.add(checkoutButton, constraints);
+
+        add(pane);
+
     }
 
-    private ActionListener onItemAdded() {
-        return (event) -> {
-            addItemToInventoryButton.setText("Items " + ++pressed);
-        };
+    private void addItem(ActionEvent addEvent) {
+
+        //item is being created when additemtoinventory button hit, not the button in the window
+
+        AddItemWindow addItemWindow = new AddItemWindow();
+        addItemWindow.run();
+        Item newItem = new Item(addItemWindow.getItemName(), addItemWindow.getItemPrice());
+        newInventory.addToInventory(newItem);
+        System.out.println(newItem.getItemName());
+
     }
-}
+
+    private void printItems(ActionEvent printEvent) {
+        JFrame printWindow = new JFrame("Inventory");
+        printWindow.setSize(300, 600);
+        printWindow.setVisible(true);
+        printWindow.setDefaultCloseOperation(HIDE_ON_CLOSE);
+
+        List<Item> itemsInInventory = newInventory.getInventoryItems();
+        DefaultListModel inventoryList = new DefaultListModel();
+
+        for (Item t : itemsInInventory) {
+            inventoryList.addElement(t);
+        }
+
+        JList inventoryJList = new JList(inventoryList);
+        JScrollPane listScrollPane = new JScrollPane(inventoryJList);
+
+        printWindow.add(listScrollPane);
+
+    }
+
+    private void saveInventory(ActionEvent e) {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(newInventory);
+            jsonWriter.close();
+            System.out.println("Saved " + newInventory.getInventoryName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException exception) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+
+    }
+
+    private void deleteInventory(ActionEvent e) {
+        newInventory = new Inventory("Store Inventory");
+    }
+
+
+//    public List<Item> getInventoryItems() {
+//        java.util.List<Item> itemsInInventory = newInventory.getInventoryItems();
+//        return itemsInInventory;
+//    }
+
+
+
+//    private ActionListener onItemAdded() {
+//        return (event) -> {
+//            addItemToInventoryButton.setText("Items " + ++pressed);
+//        };
+//    }
+//}
 //
 //    input = new Scanner(System.in);
 //    newInventory = new Inventory("inventoryName");
@@ -96,22 +204,23 @@ public class Pharmacy extends JFrame {
 //        runPharmacy();
 //    }
 //
-//    //EFFECTS: loads inventory
-//    private void loadInventory() {
-//        File data = new File(JSON_STORE);
-//        boolean exists = data.exists();
-//
-//        try {
-//            if (exists) {
-//                newInventory = jsonReader.read();
-//            } else {
-//                newInventory = new Inventory("Inventory");
-//            }
-//            System.out.println("Loaded " + newInventory.getInventoryName() + " from " + JSON_STORE);
-//        } catch (IOException e) {
-//            System.out.println("Unable to read from file: " + JSON_STORE);
-//        }
-//    }
+    //EFFECTS: loads inventory
+    private void loadInventory() {
+        File data = new File(JSON_STORE);
+        boolean exists = data.exists();
+
+        try {
+            if (exists) {
+                newInventory = jsonReader.read();
+            } else {
+                newInventory = new Inventory("Inventory");
+            }
+            System.out.println("Loaded " + newInventory.getInventoryName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+}
 //
 //    private void deleteItemsFromInventory() {
 //        newInventory = new Inventory("Inventory");
