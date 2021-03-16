@@ -1,5 +1,8 @@
 package ui;
 
+import model.Inventory;
+import model.Item;
+
 import java.awt.*;
 
 import javax.swing.*;
@@ -44,12 +47,13 @@ public class AddItemWindow extends JPanel
     private String itemName;
     private int itemPrice;
 
+    private Inventory inventory;
 
     //TODO: access inventory in pharmacy class, add item w/ item name/price value to inventory each time
     // Add button is clicked
 
-    public AddItemWindow() {
-
+    public AddItemWindow(Inventory inventory) {
+        this.inventory = inventory;
         setUpFormats();
 
         //Create the labels.
@@ -105,8 +109,10 @@ public class AddItemWindow extends JPanel
     public void addAction(ActionEvent e) {
         itemName = ((String) itemNameField.getValue());
         itemPrice = ((Number) itemPriceField.getValue()).intValue();
-        frame.setVisible(false);
-        frame.dispose();
+        Item addedItem = new Item(itemName, itemPrice);
+        this.inventory.addToInventory(addedItem);
+//        frame.setVisible(false);
+//        frame.dispose();
         itemNameField.setValue(null);
         itemPriceField.setValue(0);
     }
@@ -151,7 +157,7 @@ public class AddItemWindow extends JPanel
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
         //Add contents to the window.
-        frame.add(new AddItemWindow());
+        frame.add(new AddItemWindow(this.inventory));
 
         //Display the window.
         frame.pack();

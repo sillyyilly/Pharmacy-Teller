@@ -17,8 +17,8 @@ public class Inventory implements Writable {
 
 
     // EFFECTS: creates empty arraylist
-    public Inventory(String orderName) {
-        this.inventoryName = orderName;
+    public Inventory(String inventoryName) {
+        this.inventoryName = inventoryName;
         itemsInInventory = new ArrayList<>();
     }
 

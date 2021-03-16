@@ -1,20 +1,15 @@
 {
-    "inventoryName": "Inventory",
+    "inventoryName": "Store Inventory",
     "itemsInInventory": [
         {
-            "itemId": 1,
+            "itemId": 5,
             "itemName": "Advil",
             "itemPrice": 1000
         },
         {
-            "itemId": 2,
+            "itemId": 6,
             "itemName": "Tylenol",
             "itemPrice": 1500
-        },
-        {
-            "itemId": 3,
-            "itemName": "Midol",
-            "itemPrice": 700
         }
     ]
 }

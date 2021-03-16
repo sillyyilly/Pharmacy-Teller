@@ -19,7 +19,7 @@ public class Pharmacy extends JFrame {
 
 
     private Scanner input;
-    private Inventory newInventory;
+    private Inventory storeInventory;
     private Checkout newCheckout;
     private static final String JSON_STORE = "./data/inventory.json";
     private JsonWriter jsonWriter;
@@ -33,7 +33,7 @@ public class Pharmacy extends JFrame {
     public Pharmacy() {
         super("Pharmacy");
         input = new Scanner(System.in);
-        newInventory = new Inventory("inventoryName");
+        storeInventory = new Inventory("inventoryName");
         newCheckout = new Checkout();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -68,6 +68,7 @@ public class Pharmacy extends JFrame {
 
         checkoutButton = new JButton();
         checkoutButton.setText("Checkout");
+        checkoutButton.addActionListener(e -> checkoutWindow(e));
 
     }
 
@@ -105,11 +106,8 @@ public class Pharmacy extends JFrame {
 
         //item is being created when additemtoinventory button hit, not the button in the window
 
-        AddItemWindow addItemWindow = new AddItemWindow();
+        AddItemWindow addItemWindow = new AddItemWindow(storeInventory);
         addItemWindow.run();
-        Item newItem = new Item(addItemWindow.getItemName(), addItemWindow.getItemPrice());
-        newInventory.addToInventory(newItem);
-        System.out.println(newItem.getItemName());
 
     }
 
@@ -119,12 +117,13 @@ public class Pharmacy extends JFrame {
         printWindow.setVisible(true);
         printWindow.setDefaultCloseOperation(HIDE_ON_CLOSE);
 
-        List<Item> itemsInInventory = newInventory.getInventoryItems();
+        List<Item> itemsInInventory = storeInventory.getInventoryItems();
         DefaultListModel inventoryList = new DefaultListModel();
 
         for (Item t : itemsInInventory) {
-            inventoryList.addElement(t);
+            inventoryList.addElement(t.getItemName());
         }
+
 
         JList inventoryJList = new JList(inventoryList);
         JScrollPane listScrollPane = new JScrollPane(inventoryJList);
@@ -136,9 +135,9 @@ public class Pharmacy extends JFrame {
     private void saveInventory(ActionEvent e) {
         try {
             jsonWriter.open();
-            jsonWriter.write(newInventory);
+            jsonWriter.write(storeInventory);
             jsonWriter.close();
-            System.out.println("Saved " + newInventory.getInventoryName() + " to " + JSON_STORE);
+            System.out.println("Saved " + storeInventory.getInventoryName() + " to " + JSON_STORE);
         } catch (FileNotFoundException exception) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
@@ -146,9 +145,13 @@ public class Pharmacy extends JFrame {
     }
 
     private void deleteInventory(ActionEvent e) {
-        newInventory = new Inventory("Store Inventory");
+        storeInventory = new Inventory("Store Inventory");
     }
 
+    private void checkoutWindow(ActionEvent e) {
+        CheckoutWindow mainCheckoutWindow = new CheckoutWindow();
+
+    }
 
 //    public List<Item> getInventoryItems() {
 //        java.util.List<Item> itemsInInventory = newInventory.getInventoryItems();
@@ -211,11 +214,11 @@ public class Pharmacy extends JFrame {
 
         try {
             if (exists) {
-                newInventory = jsonReader.read();
+                storeInventory = jsonReader.read();
             } else {
-                newInventory = new Inventory("Inventory");
+                storeInventory = new Inventory("Inventory");
             }
-            System.out.println("Loaded " + newInventory.getInventoryName() + " from " + JSON_STORE);
+            System.out.println("Loaded " + storeInventory.getInventoryName() + " from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
