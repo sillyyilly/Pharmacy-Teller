@@ -1,7 +1,6 @@
 package ui;
 
 import model.Checkout;
-import model.Item;
 import model.Inventory;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -9,10 +8,6 @@ import persistence.JsonWriter;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
 
 public class Pharmacy extends JFrame {
@@ -51,7 +46,7 @@ public class Pharmacy extends JFrame {
 
     private void addItem(ActionEvent event) {
 
-        AddItem newItem = new AddItem(onItemAdded());
+        AddItem newItem = new AddItem();
     }
 
     private ActionListener onItemAdded() {
