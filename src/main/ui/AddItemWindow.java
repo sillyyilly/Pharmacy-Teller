@@ -36,7 +36,7 @@ public class AddItemWindow extends JPanel
 
     //Strings for the labels
     private static String nameString = "Item Name: ";
-    private static String priceString = "Item Price: ";
+    private static String priceString = "Item Price (in cents): ";
 
     //Fields for data entry
     private JFormattedTextField itemNameField;

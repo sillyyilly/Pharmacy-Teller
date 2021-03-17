@@ -121,7 +121,12 @@ public class Pharmacy extends JFrame {
         DefaultListModel inventoryList = new DefaultListModel();
 
         for (Item t : itemsInInventory) {
-            inventoryList.addElement(t.getItemName());
+
+            String indexNumber = String.valueOf(itemsInInventory.indexOf(t));
+            String priceInDollars = String.format("$%.2f", t.getItemPrice() / 100.0);
+            String displayInfo = ("[" + indexNumber + "]" + " " + t.getItemName() + " " + priceInDollars);
+
+            inventoryList.addElement(displayInfo);
         }
 
 
@@ -149,7 +154,8 @@ public class Pharmacy extends JFrame {
     }
 
     private void checkoutWindow(ActionEvent e) {
-        CheckoutWindow mainCheckoutWindow = new CheckoutWindow();
+        CheckoutWindow mainCheckoutWindow = new CheckoutWindow(storeInventory, newCheckout);
+        mainCheckoutWindow.run();
 
     }
 

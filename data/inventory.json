@@ -10,6 +10,16 @@
             "itemId": 6,
             "itemName": "Tylenol",
             "itemPrice": 1500
+        },
+        {
+            "itemId": 7,
+            "itemName": "Gravol",
+            "itemPrice": 900
+        },
+        {
+            "itemId": 8,
+            "itemName": "Midol",
+            "itemPrice": 1200
         }
     ]
 }
