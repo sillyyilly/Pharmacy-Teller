@@ -36,7 +36,7 @@ public class AddItemWindow extends JPanel
 
     //Strings for the labels
     private static String nameString = "Item Name: ";
-    private static String priceString = "Item Price (in cents): ";
+    private static String priceString = "Item Price: ";
 
     //Fields for data entry
     private JFormattedTextField itemNameField;
@@ -48,9 +48,6 @@ public class AddItemWindow extends JPanel
     private int itemPrice;
 
     private Inventory inventory;
-
-    //TODO: access inventory in pharmacy class, add item w/ item name/price value to inventory each time
-    // Add button is clicked
 
     public AddItemWindow(Inventory inventory) {
         this.inventory = inventory;
@@ -108,11 +105,9 @@ public class AddItemWindow extends JPanel
 
     public void addAction(ActionEvent e) {
         itemName = ((String) itemNameField.getValue());
-        itemPrice = ((Number) itemPriceField.getValue()).intValue();
+        itemPrice = (int) (((Number) itemPriceField.getValue()).doubleValue() * 100);
         Item addedItem = new Item(itemName, itemPrice);
         this.inventory.addToInventory(addedItem);
-//        frame.setVisible(false);
-//        frame.dispose();
         itemNameField.setValue(null);
         itemPriceField.setValue(0);
     }

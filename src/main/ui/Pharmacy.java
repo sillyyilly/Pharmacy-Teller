@@ -9,6 +9,7 @@ import persistence.JsonWriter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,6 +30,10 @@ public class Pharmacy extends JFrame {
     JButton deleteItemsInInventoryButton;
     JButton checkoutButton;
     JButton saveInventoryButton;
+    JLabel buttonPane;
+//    JLabel backgroundLabel;
+//    JPanel addItemToInventoryPanel;
+
 
     public Pharmacy() {
         super("Pharmacy");
@@ -43,68 +48,113 @@ public class Pharmacy extends JFrame {
         setVisible(true);
         setSize(800, 450);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        setLayout(new BorderLayout());
+
+//        Image image = new ImageIcon("data/HELTH.png").getImage();
+//        ImageIcon background = new ImageIcon(getScaledImage(image, 800, 450));
+
+        //TODO: not displaying background image
+//        JLabel backgroundLabel = new JLabel(new ImageIcon("data/HELTH.png"));
+//        add(backgroundLabel);
+//        backgroundLabel.setLayout(new FlowLayout());
+
+
 
         makeButtons();
         displayButtons();
 
     }
 
+//    private void makeBackground() {
+//        Image image = new ImageIcon("data/HELTH.png").getImage();
+//        ImageIcon background = new ImageIcon(getScaledImage(image, 800, 450));
+//
+//        JLabel backgroundLabel = new JLabel(background);
+//        add(backgroundLabel);
+//
+//        backgroundLabel.add(buttonPane);
+//    }
+
+
+    private Image getScaledImage(Image srcImg, int w, int h) {
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return resizedImg;
+    }
+
+
     public void makeButtons() {
         addItemToInventoryButton = new JButton();
         addItemToInventoryButton.setText("Add Item to Inventory");
         addItemToInventoryButton.addActionListener(event -> addItem(event));
+        addItemToInventoryButton.setPreferredSize(new Dimension(200, 30));
 
         printInventoryButton = new JButton();
         printInventoryButton.setText("Print Items in Inventory");
         printInventoryButton.addActionListener(e -> printItems(e));
+        printInventoryButton.setPreferredSize(new Dimension(200, 30));
 
         saveInventoryButton = new JButton();
         saveInventoryButton.setText("Save Items in Inventory");
         saveInventoryButton.addActionListener(e -> saveInventory(e));
+        saveInventoryButton.setPreferredSize(new Dimension(200, 30));
 
         deleteItemsInInventoryButton = new JButton();
         deleteItemsInInventoryButton.setText("Delete Items in Inventory");
         deleteItemsInInventoryButton.addActionListener(e -> deleteInventory(e));
+        deleteItemsInInventoryButton.setPreferredSize(new Dimension(200, 30));
 
         checkoutButton = new JButton();
         checkoutButton.setText("Checkout");
         checkoutButton.addActionListener(e -> checkoutWindow(e));
+        checkoutButton.setPreferredSize(new Dimension(200, 30));
 
     }
 
     public void displayButtons() {
 
-        JPanel pane = new JPanel(new GridBagLayout());
+        JPanel buttonPane = new JPanel(new GridBagLayout());
+
+//        Image image = new ImageIcon("data/HELTH.png").getImage();
+//        ImageIcon background = new ImageIcon(getScaledImage(image, 800, 450));
+
+//        JLabel backgroundLabel = new JLabel(background);
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.insets = new Insets(10, 10, 10, 10);
 
         constraints.gridx = 0;
         constraints.gridy = 0;
-        pane.add(addItemToInventoryButton, constraints);
+        buttonPane.add(addItemToInventoryButton, constraints);
 
         constraints.gridx = 1;
-        pane.add(printInventoryButton, constraints);
+        buttonPane.add(printInventoryButton, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 1;
-        pane.add(saveInventoryButton, constraints);
+        buttonPane.add(saveInventoryButton, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 2;
-        pane.add(deleteItemsInInventoryButton, constraints);
+        buttonPane.add(deleteItemsInInventoryButton, constraints);
 
         constraints.gridx = 1;
         constraints.gridy = 1;
-        pane.add(checkoutButton, constraints);
+        buttonPane.add(checkoutButton, constraints);
 
-        add(pane);
+//        backgroundLabel.add(buttonPane);
+//        add(backgroundLabel);
+
+        add(buttonPane);
 
     }
 
     private void addItem(ActionEvent addEvent) {
-
-        //item is being created when additemtoinventory button hit, not the button in the window
 
         AddItemWindow addItemWindow = new AddItemWindow(storeInventory);
         addItemWindow.run();

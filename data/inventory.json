@@ -2,24 +2,14 @@
     "inventoryName": "Store Inventory",
     "itemsInInventory": [
         {
-            "itemId": 5,
+            "itemId": 3,
             "itemName": "Advil",
-            "itemPrice": 1000
+            "itemPrice": 950
         },
         {
-            "itemId": 6,
+            "itemId": 4,
             "itemName": "Tylenol",
-            "itemPrice": 1500
-        },
-        {
-            "itemId": 7,
-            "itemName": "Gravol",
-            "itemPrice": 900
-        },
-        {
-            "itemId": 8,
-            "itemName": "Midol",
-            "itemPrice": 1200
+            "itemPrice": 1225
         }
     ]
 }

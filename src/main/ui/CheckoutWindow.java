@@ -8,13 +8,13 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class CheckoutWindow extends JPanel {
 
 //    private final JFrame checkoutWindow;
     private JFrame frame = new JFrame("Checkout");
-    //TODO: making two windows , merge
 
     private JList checkoutInventory;
     private DefaultListModel checkoutInventoryModel;
@@ -34,9 +34,7 @@ public class CheckoutWindow extends JPanel {
 
         List<Item> inventoryList = inventory.getInventoryItems();
         for (Item t : inventoryList) {
-//            checkoutInventoryModel.addElement(t);
-            // store data differently?
-//            String indexNumber = String.valueOf(inventoryList.indexOf(t));
+
             String priceInDollars = String.format("$%.2f", t.getItemPrice() / 100.0);
             String displayInfo = (t.getItemName() + " " + priceInDollars);
 
@@ -44,35 +42,7 @@ public class CheckoutWindow extends JPanel {
 
         }
 
-//        private void printItems(ActionEvent printEvent) {
-//            JFrame printWindow = new JFrame("Inventory");
-//            printWindow.setSize(300, 600);
-//            printWindow.setVisible(true);
-//            printWindow.setDefaultCloseOperation(HIDE_ON_CLOSE);
-//
-//            List<Item> itemsInInventory = storeInventory.getInventoryItems();
-//            DefaultListModel inventoryList = new DefaultListModel();
-//
-//            for (Item t : itemsInInventory) {
-//
-//                String indexNumber = String.valueOf(itemsInInventory.indexOf(t));
-//                String priceInDollars = String.format("$%.2f", t.getItemPrice() / 100.0);
-//                String displayInfo = ("[" + indexNumber + "]" + " " + t.getItemName() + " " + priceInDollars);
-//
-//                inventoryList.addElement(displayInfo);
-//            }
-//
-//
-//            JList inventoryJList = new JList(inventoryList);
-//            JScrollPane listScrollPane = new JScrollPane(inventoryJList);
-//
-//            printWindow.add(listScrollPane);
-//
-//        }
 
-
-//        checkoutInventoryModel.addElement("object 1");
-//        checkoutInventoryModel.addElement("object 2");
 
         checkoutInventory = new JList(checkoutInventoryModel);
         checkoutInventory.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -136,34 +106,33 @@ public class CheckoutWindow extends JPanel {
 //        System.out.println("added Item");
     }
 
-//    private void finalCheckoutPrice() {
-//        List<Item> itemsInCheckout = newCheckout.getCheckoutItems();
-//        for (Item c : itemsInCheckout) {
-//            String priceInDollars = String.format("$%.2f", c.getItemPrice() / 100.0);
-//            System.out.println(c.getItemName() + " " + priceInDollars);
-//        }
-//        String totalOrderPrice = String.format("$%.2f", newCheckout.checkoutPrice() / 100.0);
-//        System.out.println("Total Price: " + totalOrderPrice);
-//        System.out.println("Thank you for visiting. Have a great day!");
-//    }
 
     private void finalCheckout(ActionEvent e) {
-//        JFrame totalPriceFrame = new JFrame();
-//        totalPriceFrame.setSize(500, 300);
-//        totalPriceFrame.setVisible(true);
-//        totalPriceFrame.setDefaultCloseOperation(HIDE_ON_CLOSE);
 
         String totalOrderPrice = String.format("$%.2f", checkout.checkoutPrice() / 100.0);
-//        List<Item> itemsInCheckout = checkout.getCheckoutItems();
-//        for (Item c : itemsInCheckout) {
-//            String priceInDollars = String.format("$%.2f", c.getItemPrice() / 100.0);
-//        }
 
-        JOptionPane.showMessageDialog(this, "Total Price: " + totalOrderPrice);
+        Image image = new ImageIcon("data/pills.jpg").getImage();
+        ImageIcon icon2 = new ImageIcon(getScaledImage(image, 150, 150));
+
+
+        JOptionPane.showMessageDialog(this, "Total Price: " + totalOrderPrice,
+                "Checkout", JOptionPane.INFORMATION_MESSAGE, icon2);
         checkout = new Checkout();
 
 
     }
+
+    private Image getScaledImage(Image srcImg, int w, int h) {
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return resizedImg;
+    }
+
 
     private void createAndShowGUI() {
         //Create and set up the window.
