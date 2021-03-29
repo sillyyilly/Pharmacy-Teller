@@ -49,6 +49,7 @@ public class AddItemWindow extends JPanel
 
     private Inventory inventory;
 
+    //EFFECTS: creates window where users can input item name and price and add the item to inventory
     public AddItemWindow(Inventory inventory) {
         this.inventory = inventory;
         setUpFormats();
@@ -72,6 +73,7 @@ public class AddItemWindow extends JPanel
         makeTextBox();
     }
 
+    //EFFECTS: Creates a formatted text box with fields for item name and item price
     public void makeTextBox() {
 
         //Lay out the labels in a panel.
@@ -103,6 +105,8 @@ public class AddItemWindow extends JPanel
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: creates item with given item parameters and adds item to inventory
     public void addAction(ActionEvent e) {
         itemName = ((String) itemNameField.getValue());
         itemPrice = (int) (((Number) itemPriceField.getValue()).doubleValue() * 100);
@@ -112,7 +116,7 @@ public class AddItemWindow extends JPanel
         itemPriceField.setValue(0);
     }
 
-    /** Called when a field's "value" property changes. */
+    // EFFECTS: Called when a field's "value" property changes
     public void propertyChange(PropertyChangeEvent e) {
         Object source = e.getSource();
         if (source == itemNameField) {
@@ -123,30 +127,7 @@ public class AddItemWindow extends JPanel
 
     }
 
-//    public void actionPerformed(ActionEvent e) {
-//        if ("add item".equals(e.getActionCommand())) {
-//            itemName = ((String) itemNameField.getValue());
-//            itemPrice = ((Number) itemPriceField.getValue()).intValue();
-//            frame.setVisible(false);
-//            frame.dispose();
-//            name = null;
-//            numPrice = 0;
-//        }
-//    }
-
-    public String getItemName() {
-        return itemName;
-    }
-
-    public int getItemPrice() {
-        return itemPrice;
-    }
-
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event dispatch thread.
-     */
+    // EFFECTS: Create the GUI and show it
     private void createAndShowGUI() {
         //Create and set up the window.
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -159,41 +140,15 @@ public class AddItemWindow extends JPanel
         frame.setVisible(true);
     }
 
+    // EFFECTS: runs the window
     public void run() {
         //Turn off metal's use of bold fonts
         UIManager.put("swing.boldMetal", Boolean.FALSE);
         createAndShowGUI();
     }
-//
-//    public static void main(String[] args) {
-//        //Schedule a job for the event dispatch thread:
-//        //creating and showing this application's GUI.
-//        SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                //Turn off metal's use of bold fonts
-//                UIManager.put("swing.boldMetal", Boolean.FALSE);
-//                createAndShowGUI();
-//            }
-//        });
-//    }
 
-    //Create and set up number formats. These objects also
-    //parse numbers input by user.
+    //EFFECTS: Create and set up number formats. These objects also parse numbers input by user.
     private void setUpFormats() {
         priceFormat = NumberFormat.getNumberInstance();
     }
 }
-//    public AddItem(ActionListener itemAdded) {
-//        setSize(800, 450);
-//        setVisible(true);
-//        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-//
-//        JPanel buttonPanel = new JPanel();
-//        buttonPanel.setSize(100, 30);
-//
-//        JButton pressed = new JButton();
-//        pressed.addActionListener((event) -> {
-//            itemAdded.actionPerformed(event);
-//            setVisible(false);
-//        });
-//        add(pressed);

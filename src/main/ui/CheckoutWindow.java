@@ -26,6 +26,8 @@ public class CheckoutWindow extends JPanel {
     private JScrollPane checkoutScrollPane;
     private Item selectedItem;
 
+    //EFFECTS: creates window where users can select items from a list
+    // and presents order total when "checkout" button is pressed
     public CheckoutWindow(Inventory inventory, Checkout checkout) {
         this.inventory = inventory;
         this.checkout = checkout;
@@ -56,6 +58,7 @@ public class CheckoutWindow extends JPanel {
 
     }
 
+    //EFFECTS: creates buttons for checkout window
     private void makeCheckoutComponents() {
 
         JPanel buttonPanel = new JPanel(new GridLayout(0, 1));
@@ -71,6 +74,7 @@ public class CheckoutWindow extends JPanel {
         checkoutButton.addActionListener(e -> finalCheckout(e));
     }
 
+    //EFFECTS: creates checkout window
     private void displayCheckoutWindow() {
         JPanel checkoutPanel = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -92,21 +96,21 @@ public class CheckoutWindow extends JPanel {
 
 
     }
-// index of selection selects index of item list, adds item to checkout
 
+    //EFFECTS: index of selection selects index of item list, adds item to checkout
     private void selectItem(ListSelectionEvent e) {
         selectedItemIndex = checkoutInventory.getSelectedIndex();
-//        System.out.println("item selected");
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds selected item to the checkout list
     private void addToCheckout(ActionEvent e) {
         selectedItem = inventory.getInventoryItems().get(selectedItemIndex);
-//        System.out.println(selectedItem.getItemName());
         checkout.addToCheckout(selectedItem);
-//        System.out.println("added Item");
     }
 
 
+    //EFFECTS: displays final total order price with an image and resets checkout to empty
     private void finalCheckout(ActionEvent e) {
 
         String totalOrderPrice = String.format("$%.2f", checkout.checkoutPrice() / 100.0);
@@ -122,6 +126,7 @@ public class CheckoutWindow extends JPanel {
 
     }
 
+    //EFFECTS: resizes image
     private Image getScaledImage(Image srcImg, int w, int h) {
         BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = resizedImg.createGraphics();
@@ -134,6 +139,7 @@ public class CheckoutWindow extends JPanel {
     }
 
 
+    // EFFECTS: Create the GUI and show it
     private void createAndShowGUI() {
         //Create and set up the window.
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -146,6 +152,7 @@ public class CheckoutWindow extends JPanel {
         frame.setVisible(true);
     }
 
+    // EFFECTS: runs the window
     public void run() {
         //Turn off metal's use of bold fonts
         UIManager.put("swing.boldMetal", Boolean.FALSE);

@@ -1,4 +1,4 @@
 {
-    "itemsOrdered": [],
-    "orderName": "test order"
+    "inventoryName": "test order",
+    "itemsInInventory": []
 }

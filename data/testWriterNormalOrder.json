@@ -1,15 +1,15 @@
 {
-    "itemsOrdered": [
+    "inventoryName": "test order",
+    "itemsInInventory": [
         {
-            "itemId": 10,
+            "itemId": 8,
             "itemName": "Advil",
             "itemPrice": 1000
         },
         {
-            "itemId": 11,
+            "itemId": 9,
             "itemName": "Tylenol",
             "itemPrice": 1500
         }
-    ],
-    "orderName": "test order"
+    ]
 }

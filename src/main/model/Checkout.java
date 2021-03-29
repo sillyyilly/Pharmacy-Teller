@@ -7,6 +7,7 @@ import java.util.List;
 public class Checkout {
     private ArrayList<Item> itemsInCheckout;
 
+    //EFFECTS: creates an empty array list
     public Checkout() {
         itemsInCheckout = new ArrayList<>();
     }

@@ -1,5 +1,5 @@
 {
-  "itemsOrdered": [
+  "itemsInInventory": [
     {
       "itemId": 10,
       "itemName": "Advil",
@@ -11,5 +11,5 @@
       "itemPrice": 1500
     }
   ],
-  "orderName": "test normal order"
+  "inventoryName": "test normal order"
 }
