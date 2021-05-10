@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 
 public class JsonReader {
 
-    // model for code based on JsonSerializationDemo
 
     private String source;
 

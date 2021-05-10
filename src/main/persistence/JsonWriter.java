@@ -16,8 +16,6 @@ import java.io.PrintWriter;
 // Represents a reader that reads the order from JSON data stored in file
 public class JsonWriter {
 
-    // model for code based on JsonSerializationDemo
-
     private static final int TAB = 4;
     private PrintWriter writer;
     private String destination;
